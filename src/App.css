@@ -1,9 +1,9 @@
-.App {
+App-logo.App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 12vmin;
   pointer-events: none;
 }
 
@@ -15,15 +15,18 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 5px 0;
 }
 
+.App-header p {
+  margin: auto 5px;
+}
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +38,30 @@
   to {
     transform: rotate(360deg);
   }
+}
+.App {
+  width: 80%;
+  margin: 0 auto;
+}
+.restaurant-list .toggle-button {
+  margin: 0 0 5px;
+  padding: 1px 6px;
+}
+.restaurant-list img.add-to-order {
+  width: 25px;
+  cursor: pointer;
+}
+.restaurant-list {
+  list-style: none;
+}
+
+.restaurant-list li {
+  border-bottom: #61dafb solid 1px;
+  margin: 10px 0;
+}
+.restaurant-list li li.menu-list-item {
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  width: 80%;
 }

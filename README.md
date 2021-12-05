@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# Pizza ordering
+
+This app is ordering Pizza with mocked APIs from the Apiary specification using React.        
+• Show a list of pizza restaurants and have the closest to your current location at the top        
+• From the list enter into a detailed view for that restaurant and display the available menu for that location.        
+• Let the users add items from the menu into a shopping cart        
+• Place the order        
+• Display the orders state 
+• API’s here:  https://pizzaapp.docs.apiary.io/ 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
