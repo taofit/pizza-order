@@ -1,25 +1,45 @@
-import React, {useEffect, useState, MouseEvent} from "react";
-import {FoodMenu} from "../services/types";
+import React, {useEffect, useState} from "react";
+import {FoodMenu, Cart, MenuItem} from "../services/types";
 import {LoadRestaurantMenu} from "../services/API";
 import {Button, Collapse} from "react-bootstrap";
+import Dialog from '@mui/material/Dialog';
 
 const add_basket_icon = './svg/add_basket_icon.svg';
 
 interface MenuProps {
     id: number;
+    restaurantIdInCart: number;
+    setRestaurantIdInCart: Function;
 }
 type MenusCategoryType = {
   [key: string]: FoodMenu[]
 };
 
-const Menu: React.FC<MenuProps> = ({id}: MenuProps) => {
+
+const Menu: React.FC<MenuProps> = ({id, restaurantIdInCart, setRestaurantIdInCart}: MenuProps) => {
     const [open, setOpen] = useState(false);
     const [menus, setMenus] = useState<FoodMenu[]>([]);
     const [menusCategory, setMenusCategory] = useState<MenusCategoryType>({});
+    const [cart, setCart] = useState<Cart>([]);
     const collapseId = `collapse-menu-${id}`;
 
-    const addToOrder = (menuId: number) => {
-        console.log(menuId, id);//id is restaurant id
+    const isAnotherRestaurant = (restaurantId: number) => restaurantIdInCart !== -1 && restaurantIdInCart !== restaurantId;
+
+    const addToCart = (menuItemId: number) => {
+        console.log(menuItemId, id); //id is restaurant id
+        if (isAnotherRestaurant(id)) {
+            console.log('cannot choose another restaurant');
+            return;
+        }
+        setRestaurantIdInCart(id);
+        const newMenuItem = {menuItemId, quantity: 1};
+        const menuItemIndex = cart.findIndex((menuItem) => menuItem.menuItemId === menuItemId)
+        if (menuItemIndex === -1) {
+            setCart([...cart, newMenuItem]);
+        } else {
+            cart[menuItemIndex] = {...cart[menuItemIndex], quantity: cart[menuItemIndex]['quantity'] + 1};
+            setCart(cart)
+        }
     };
 
     useEffect(() => {
@@ -63,7 +83,7 @@ const Menu: React.FC<MenuProps> = ({id}: MenuProps) => {
                                             {menusCategory[category].map((item) => (
                                                     <li key={item.id} className="menu-list-item">
                                                         <span>{item.name}, {item.price} kronor, {item.rank && `Rank: ${item.rank}`}</span>
-                                                        <img src={add_basket_icon} className="add-to-order" onClick={() => addToOrder(item.id)}/>
+                                                        <img src={add_basket_icon} className="add-to-order" onClick={() => addToCart(item.id)}/>
                                                     </li>
                                                 )
                                             )}
