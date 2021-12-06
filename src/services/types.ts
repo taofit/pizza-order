@@ -21,3 +21,10 @@ export interface FoodMenu {
     price: number;
     rank: number;
 }
+
+export interface MenuItem {
+    menuItemId: number;
+    quantity: number;
+}
+
+export type Cart = MenuItem[];
