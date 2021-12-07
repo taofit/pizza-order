@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { LoadRestaurants } from '../services/API';
-import { Restaurant } from '../services/types';
+import {MenuItem, Restaurant} from '../services/types';
 import RestaurantDetail from './restaurantDetail';
 
-const Restaurants = () => {
+interface RestaurantsProps {
+    addItemToCart: (menuItem: MenuItem) => void;
+}
+
+const Restaurants: React.FC<RestaurantsProps> = ({addItemToCart}) => {
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     const [restaurantIdInCart, setRestaurantIdInCart] = useState<number>(-1);
     useEffect(() => {
@@ -17,6 +21,7 @@ const Restaurants = () => {
                 restaurant={restaurant}
                 setRestaurantIdInCart={setRestaurantIdInCart}
                 restaurantIdInCart={restaurantIdInCart}
+                addItemToCart={addItemToCart}
             />)}
         </ul>
     );

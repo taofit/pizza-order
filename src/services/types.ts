@@ -13,7 +13,7 @@ export interface Restaurant {
     name: string;
 }
 
-export interface FoodMenu {
+export interface MenuItem {
     id: number;
     category: string;
     name: string;
@@ -22,9 +22,14 @@ export interface FoodMenu {
     rank: number;
 }
 
-export interface MenuItem {
+export interface MenuItemWithCount {
+    menuItem: MenuItem;
+    quantity: number;
+}
+
+export interface MenuItemOrder {
     menuItemId: number;
     quantity: number;
 }
 
-export type Cart = MenuItem[];
+export type Cart = MenuItemOrder[];
