@@ -1,47 +1,40 @@
-import React, {useEffect, useState} from "react";
-import {MenuItem, Cart, MenuItemOrder} from "../services/types";
-import {LoadRestaurantMenu} from "../services/API";
-import {Button, Collapse} from "react-bootstrap";
-import Dialog from '@mui/material/Dialog';
+import React, {useEffect, useState} from 'react';
+import {MenuItem} from '../services/types';
+import {LoadRestaurantMenu} from '../services/API';
+import {Button, Collapse} from 'react-bootstrap';
+import Tooltip from '@mui/material/Tooltip';
 
-const add_basket_icon = './svg/add_basket_icon.svg';
+const ADD_BASKET_ICON = './svg/add_basket_icon.svg';
 
 interface MenuProps {
-    id: number;
+    restaurantId: number;
     restaurantIdInCart: number;
-    setRestaurantIdInCart: Function;
+    setRestaurantToCart: Function;
     addItemToCart: (menuItem: MenuItem) => void;
+    setOpenAlert: (open: boolean) => void;
 }
 type MenusCategoryType = {
-  [key: string]: MenuItem[]
+    [key: string]: MenuItem[]
 };
 
 
-const Menu: React.FC<MenuProps> = ({id, restaurantIdInCart, setRestaurantIdInCart, addItemToCart}: MenuProps) => {
+const Menu: React.FC<MenuProps> = ({restaurantId, restaurantIdInCart, setRestaurantToCart, addItemToCart, setOpenAlert}: MenuProps) => {
     const [open, setOpen] = useState(false);
     const [menus, setMenus] = useState<MenuItem[]>([]);
     const [menusCategory, setMenusCategory] = useState<MenusCategoryType>({});
-    const [cart, setCart] = useState<Cart>([]);
-    const collapseId = `collapse-menu-${id}`;
+    const collapseId = `collapse-menu-${restaurantId}`;
 
     const isAnotherRestaurant = (restaurantId: number) => restaurantIdInCart !== -1 && restaurantIdInCart !== restaurantId;
 
     const addToCart = (menuItem: MenuItem) => {
-        // console.log(menuItem, id); //id is restaurant id
-        if (isAnotherRestaurant(id)) {
-            console.log('cannot choose another restaurant');
+        if (isAnotherRestaurant(restaurantId)) {
+            setOpenAlert(true);
             return;
         }
-        setRestaurantIdInCart(id);
+        if (restaurantId !== restaurantIdInCart) {
+            setRestaurantToCart(restaurantId);
+        }
         addItemToCart(menuItem);
-        // const newMenuItem = {menuItemId, quantity: 1};
-        // const menuItemIndex = cart.findIndex((menuItem) => menuItem.menuItemId === menuItemId)
-        // if (menuItemIndex === -1) {
-        //     setCart([...cart, newMenuItem]);
-        // } else {
-        //     cart[menuItemIndex] = {...cart[menuItemIndex], quantity: cart[menuItemIndex]['quantity'] + 1};
-        //     setCart(cart)
-        // }
     };
 
     const rearrangeMenuByCategory = () => {
@@ -56,7 +49,7 @@ const Menu: React.FC<MenuProps> = ({id, restaurantIdInCart, setRestaurantIdInCar
     };
 
     useEffect(() => {
-        LoadRestaurantMenu(id).then((menus: MenuItem[]) => {
+        LoadRestaurantMenu(restaurantId).then((menus: MenuItem[]) => {
             setMenus(menus);
         });
     }, []);
@@ -89,7 +82,9 @@ const Menu: React.FC<MenuProps> = ({id, restaurantIdInCart, setRestaurantIdInCar
                                             {menusCategory[category].map((item) => (
                                                     <li key={item.id} className="menu-list-item">
                                                         <span>{item.name}, {item.price} kronor, {item.rank && `Rank: ${item.rank}`}</span>
-                                                        <img src={add_basket_icon} className="add-to-order" onClick={() => addToCart(item)}/>
+                                                        <Tooltip title="add to cart" placement="right-end">
+                                                            <img src={ADD_BASKET_ICON} className="add-to-order" onClick={() => addToCart(item)}/>
+                                                        </Tooltip>
                                                     </li>
                                                 )
                                             )}

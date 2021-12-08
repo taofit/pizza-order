@@ -22,7 +22,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 const CartBadge:React.FC<CartBadgeProps> = ({toggleDrawer, getTotalItems, cartItems}) => (
-    <IconButton aria-label="cart" className="cart" onClick={toggleDrawer}>
+    <IconButton aria-label="cart" className="cart-icon" onClick={toggleDrawer}>
         <StyledBadge badgeContent={getTotalItems(cartItems)} color="secondary">
             <ShoppingCartIcon />
         </StyledBadge>

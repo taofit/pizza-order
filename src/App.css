@@ -67,4 +67,27 @@ App-logo.App {
   width: 80%;
 }
 .cart {
+  padding: 10px;
+  min-width: 300px;
+}
+.cart .food-list {
+  border-bottom: #61dafb solid 1px;
+  margin: 20px auto 0;
+}
+.cart .cart-total h3 {
+  text-align: center;
+}
+.cart .restaurant-title,
+.cart .total-price {
+  display: inline-block;
+}
+
+.cart button {
+  margin: 5px 10px;
+}
+
+p.empty-msg {
+  margin: auto;
+  font-family: Helvetica;
+  font-size: 20px;
 }

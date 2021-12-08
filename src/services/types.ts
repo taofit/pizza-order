@@ -13,6 +13,11 @@ export interface Restaurant {
     name: string;
 }
 
+export interface RestaurantInCart {
+    id: number;
+    name: string;
+}
+
 export interface MenuItem {
     id: number;
     category: string;
@@ -32,4 +37,4 @@ export interface MenuItemOrder {
     quantity: number;
 }
 
-export type Cart = MenuItemOrder[];
+export type CartOrder = MenuItemOrder[];
