@@ -1,6 +1,7 @@
 import {MenuItem, MenuItemWithCount, RestaurantInCart, CartOrder} from "../services/types";
 import {Button} from "react-bootstrap";
 import {PlaceOrder} from "../services/API";
+import {useNavigate} from 'react-router-dom';
 
 interface Props {
     items: MenuItemWithCount[];
@@ -16,13 +17,16 @@ const getTotalPrice = (items: MenuItemWithCount[]) => items.reduce(
 );
 
 const Cart: React.FC<Props> = ({items, addItem, removeItem, restaurantInCart}) => {
-    console.log(items);
+    const navigate = useNavigate();
     const playOrder = () => {
         const cart = items.reduce((acc: CartOrder, cur) => {
             return [...acc, {menuItemId: cur.menuItem.id, quantity: cur.quantity}]
         }, []);
         const restuarantId = restaurantInCart.id;
-        PlaceOrder({cart: cart, restuarantId}).then((data) => console.log(data));
+        PlaceOrder({cart: cart, restuarantId}).then((data) => {
+            console.log(data);
+            navigate('order', {state: data});
+        });
     }
 
     return (

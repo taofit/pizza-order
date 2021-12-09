@@ -1,86 +1,27 @@
-import React, {useState, useEffect} from 'react';
-import Drawer from "@mui/material/Drawer";
-import Cart from './components/cart';
-import CartBadge from './components/cartBadge';
-import {MenuItem, MenuItemWithCount, RestaurantInCart} from './services/types';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Main from './components/main';
+import Order from './components/order';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import logo from './logo.svg';
-import Restaurants from './components/restaurantList';
 
 const Header = () => <header className="App-header">
     <img src={logo} className="App-logo" alt="logo"/>
     <p>Order your pizza here...</p>
 </header>
 
-const INIT_RESTAURANT_IN_CART = {id: -1, name: ''};
-
 function App() {
-    const [cartOpen, setCartOpen] = useState(false);
-    const [cartItems, setCartItems] = useState<MenuItemWithCount[]>([]);
-    const [restaurantInCart, setRestaurantInCart] = React.useState<RestaurantInCart>(INIT_RESTAURANT_IN_CART);
-    const [restaurantIdInCart, setRestaurantIdInCart] = useState<number>(-1);
-
-    const addItemToCart = (selectedMenuItem: MenuItem) => {
-        const newMenuItem = {menuItem: selectedMenuItem, quantity: 1};
-        const menuItemIndex = cartItems.findIndex((cartMenuItem) => cartMenuItem.menuItem.id === selectedMenuItem.id);
-        if (menuItemIndex === -1) {
-            setCartItems([...cartItems, newMenuItem]);
-        } else {
-            cartItems[menuItemIndex] = {...cartItems[menuItemIndex], quantity: cartItems[menuItemIndex]['quantity'] + 1};
-            setCartItems([...cartItems])
-        }
-    };
-
-    const getTotalItems = (items: MenuItemWithCount[]) => (
-        items.reduce((total:number, item) => total + item.quantity, 0)
-    );
-
-    const removeItemFromCart = (id: number) => {
-        const menuItemIndex = cartItems.findIndex((cartMenuItem) => cartMenuItem.menuItem.id === id);
-
-        if (menuItemIndex !== -1) {
-            const curItemQuantity = cartItems[menuItemIndex]['quantity'];
-            const newItemQuantity = curItemQuantity - 1;
-            if (newItemQuantity === 0) {
-                setCartItems([...cartItems].filter(item => item.menuItem.id !== id));
-            } else {
-                cartItems[menuItemIndex] = {...cartItems[menuItemIndex], quantity: newItemQuantity}
-                setCartItems([...cartItems]);
-            }
-        }
-    };
-
-    const toggleDrawer = () => {
-        setCartOpen(!cartOpen);
-    };
-
-    useEffect(() => {
-        if(cartItems.length === 0) {
-            setRestaurantInCart(INIT_RESTAURANT_IN_CART);
-            setRestaurantIdInCart(-1);
-        }
-    }, [cartItems]);
 
     return (
         <div className="App">
-            <Header />
-            <Drawer anchor="right" open={cartOpen} onClose={toggleDrawer}>
-                <Cart
-                    items={cartItems}
-                    addItem={addItemToCart}
-                    removeItem={removeItemFromCart}
-                    restaurantInCart={restaurantInCart}
-                />
-            </Drawer>
-            <CartBadge toggleDrawer={toggleDrawer} getTotalItems={getTotalItems} cartItems={cartItems}/>
-            <Restaurants
-                addItemToCart={addItemToCart}
-                restaurantInCart={restaurantInCart}
-                setRestaurantInCart={setRestaurantInCart}
-                restaurantIdInCart={restaurantIdInCart}
-                setRestaurantIdInCart={setRestaurantIdInCart}
-            />
+            <Header/>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Main/>}/>
+                    <Route path="order" element={<Order />} />
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }
