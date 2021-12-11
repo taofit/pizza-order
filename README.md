@@ -7,6 +7,8 @@ This app is ordering Pizza with mocked APIs from the Apiary specification using 
 • Place the order        
 • Display the orders state 
 • API’s here:  https://pizzaapp.docs.apiary.io/ 
+• Some restriction includes users cannot select items from more than one restaurant at the same time for one order. 
+If the geolocation is disabled by user, the restaurant list is based on the fetched order, and a corresponding error message displays.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
