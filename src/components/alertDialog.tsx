@@ -37,8 +37,8 @@ const AlertDialog: React.FC<AlertDialogSlide> = ({setOpenAlert, openAlert, resta
             <DialogTitle>{"Notice: cannot choose items from two different restaurants"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    You have chosen some items in restaurant "{restaurantInCart.name}", you cannot choose items from this restaurant.
-                    So you need to cancel all the items from restaurant {restaurantInCart.name} to be able to choose item from another restaurant.
+                    You have chosen some items in restaurant "{restaurantInCart.name}", you cannot choose items from another restaurant.
+                    So you need to cancel all the items from restaurant "{restaurantInCart.name}" to be able to choose item from another restaurant.
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

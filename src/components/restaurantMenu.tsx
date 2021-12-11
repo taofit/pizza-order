@@ -17,8 +17,13 @@ type MenusCategoryType = {
     [key: string]: MenuItem[]
 };
 
-
-const Menu: React.FC<MenuProps> = ({restaurantId, restaurantIdInCart, setRestaurantToCart, addItemToCart, setOpenAlert}: MenuProps) => {
+const Menu: React.FC<MenuProps> = ({
+    restaurantId,
+    restaurantIdInCart,
+    setRestaurantToCart,
+    addItemToCart,
+    setOpenAlert
+}: MenuProps) => {
     const [open, setOpen] = useState(false);
     const [menus, setMenus] = useState<MenuItem[]>([]);
     const [menusCategory, setMenusCategory] = useState<MenusCategoryType>({});
@@ -35,27 +40,27 @@ const Menu: React.FC<MenuProps> = ({restaurantId, restaurantIdInCart, setRestaur
             setRestaurantToCart(restaurantId);
         }
         addItemToCart(menuItem);
-    };
-
-    const rearrangeMenuByCategory = () => {
-        const menusCate = menus.reduce((acc: MenusCategoryType, cur) => {
-            const category = cur.category;
-            return {
-                ...acc,
-                [category]: [...(acc[category] || []), cur]
-            }
-        }, {});
-        setMenusCategory(menusCate);
+        setOpen(true);
     };
 
     useEffect(() => {
         LoadRestaurantMenu(restaurantId).then((menus: MenuItem[]) => {
             setMenus(menus);
         });
-    }, []);
+    }, [restaurantId]);
 
     useEffect(() => {
         if (!!menus.length) {
+            const rearrangeMenuByCategory = () => {
+                const menusCate = menus.reduce((acc: MenusCategoryType, cur) => {
+                    const category = cur.category;
+                    return {
+                        ...acc,
+                        [category]: [...(acc[category] || []), cur]
+                    }
+                }, {});
+                setMenusCategory(menusCate);
+            };
             rearrangeMenuByCategory();
         }
     }, [menus]);
@@ -83,7 +88,7 @@ const Menu: React.FC<MenuProps> = ({restaurantId, restaurantIdInCart, setRestaur
                                                     <li key={item.id} className="menu-list-item">
                                                         <span>{item.name}, {item.price} kronor, {item.rank && `Rank: ${item.rank}`}</span>
                                                         <Tooltip title="add to cart" placement="right-end">
-                                                            <img src={ADD_BASKET_ICON} className="add-to-order" onClick={() => addToCart(item)}/>
+                                                            <img src={ADD_BASKET_ICON} className="add-to-order" alt='' onClick={() => addToCart(item)} />
                                                         </Tooltip>
                                                     </li>
                                                 )

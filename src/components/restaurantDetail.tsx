@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Restaurant, MenuItem} from '../services/types';
 import Menu from './restaurantMenu';
 
@@ -10,9 +10,14 @@ interface RestaurantProps {
     setOpenAlert: (open: boolean) => void;
 }
 
-
-const RestaurantDetail: React.FC<RestaurantProps> = ({restaurant, restaurantIdInCart, setRestaurantToCart, addItemToCart, setOpenAlert}: RestaurantProps) => {
-    return <li key={restaurant.id}>
+const RestaurantDetail: React.FC<RestaurantProps> = ({
+    restaurant,
+    restaurantIdInCart,
+    setRestaurantToCart,
+    addItemToCart,
+    setOpenAlert
+}: RestaurantProps) => (
+    <li key={restaurant.id}>
         <h4>{restaurant.name}</h4>
         <p>{restaurant.address1} {restaurant.address2}</p>
         <Menu
@@ -23,6 +28,6 @@ const RestaurantDetail: React.FC<RestaurantProps> = ({restaurant, restaurantIdIn
             setOpenAlert={setOpenAlert}
         />
     </li>
-};
+);
 
 export default RestaurantDetail;

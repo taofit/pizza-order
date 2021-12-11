@@ -21,7 +21,7 @@ function Main() {
             setCartItems([...cartItems, newMenuItem]);
         } else {
             cartItems[menuItemIndex] = {...cartItems[menuItemIndex], quantity: cartItems[menuItemIndex]['quantity'] + 1};
-            setCartItems([...cartItems])
+            setCartItems([...cartItems]);
         }
     };
 

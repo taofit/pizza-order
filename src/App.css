@@ -22,6 +22,7 @@ App-logo.App {
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 5px 0;
+  margin: auto auto 10px;
 }
 
 .App-header p {
@@ -60,6 +61,10 @@ App-logo.App {
   border-bottom: #61dafb solid 1px;
   margin: 10px 0;
 }
+
+.restaurant-list li li:last-child {
+  border-bottom: none;
+}
 .restaurant-list li li.menu-list-item {
   display: flex;
   justify-content: space-between;
@@ -90,4 +95,21 @@ p.empty-msg {
   margin: auto;
   font-family: Helvetica;
   font-size: 20px;
+}
+.order-detail h3 {
+  text-align: center;
+}
+.order-detail ul {
+  list-style: none;
+}
+.order-detail button {
+  padding: 5px;
+  margin: 0 auto 10px;
+  font-size: 12px;
+}
+.order-detail span {
+  font-weight: bold;
+}
+.order-detail .order-in-list {
+  padding-left: 0;
 }

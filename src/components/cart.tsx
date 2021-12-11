@@ -1,3 +1,4 @@
+import React from 'react';
 import {MenuItem, MenuItemWithCount, RestaurantInCart, CartOrder} from "../services/types";
 import {Button} from "react-bootstrap";
 import {PlaceOrder} from "../services/API";
@@ -11,7 +12,6 @@ interface Props {
 }
 
 const CURRENCY = 'kr';
-
 const getTotalPrice = (items: MenuItemWithCount[]) => items.reduce(
     (acc: number, item) => acc + item.quantity * item.menuItem.price, 0
 );
@@ -24,7 +24,6 @@ const Cart: React.FC<Props> = ({items, addItem, removeItem, restaurantInCart}) =
         }, []);
         const restuarantId = restaurantInCart.id;
         PlaceOrder({cart: cart, restuarantId}).then((data) => {
-            console.log(data);
             navigate('order', {state: data});
         });
     }
@@ -40,7 +39,7 @@ const Cart: React.FC<Props> = ({items, addItem, removeItem, restaurantInCart}) =
             {!!items.length && <h4>Food list</h4>}
             {items.map((item: MenuItemWithCount)=> (
                 <div key={item.menuItem.name} className="food-list">
-                    <h4>{item.menuItem.name}</h4>
+                    <h5>{item.menuItem.name}</h5>
                     <div className='itemDetail'>
                         <div>
                             Price:
